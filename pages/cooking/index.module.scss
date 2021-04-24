@@ -1,0 +1,11 @@
+@use '../../styles/colors';
+@use '../../styles/components';
+
+.search {
+  width: calc(100% - 20px);
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid colors.$grey-light;
+  border-radius: 5px;
+}

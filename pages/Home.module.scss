@@ -1,0 +1,24 @@
+@use '../styles/components';
+@use '../styles/colors';
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  .channel {
+    font-size: 1.6rem;
+
+    a {
+      color: colors.$grey;
+    }
+
+    &::before {
+      content: '# ';
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@use '../../styles/colors';
+
+.postCard {
+  border: 1px solid colors.$primary-light;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  height: 142px;
+
+  .img {
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 0 8px 8px white;
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+    }
+  }
+
+  .content {
+    padding-left: 10px;
+    flex: 1;
+
+    .title {
+      font-size: 1.15rem;
+      padding-bottom: 5px;
+      border-bottom: 1px solid colors.$primary;
+      margin-bottom: 15px;
+
+      a {
+        color: colors.$grey;
+      }
+    }
+
+    .info {
+      font-size: 0.8rem;
+      color: lighten(colors.$grey, 20);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    height: unset;
+
+    .img {
+      width: 50px;
+      height: 50px;
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .content {
+      flex-direction: column;
+      padding-left: 0;
+      margin-bottom: 10px;
+
+      .info {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+    }
+  }
+}

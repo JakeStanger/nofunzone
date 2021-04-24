@@ -1,0 +1,28 @@
+@use '../../styles/colors';
+
+.authorCard {
+  display: flex;
+  font-size: 0.8rem;
+  color: lighten(colors.$grey, 20);
+  min-width: 125px;
+  margin-left: 20px;
+
+  .img {
+    display: flex;
+    align-items: flex-end;
+
+    > img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+  .text {
+    margin-top: auto;
+    padding-left: 10px;
+  }
+
+  @media screen and (max-width: 700px) {
+    margin-left: 0;
+  }
+}

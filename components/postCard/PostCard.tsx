@@ -17,16 +17,16 @@ const PostCard: React.FC<IPostCardProps> = ({ post }) => {
   return (
     <div className={styles.postCard}>
       <div className={styles.img}>
-        <Link href={`/cooking/posts/${post.id}`}>
-          <a href={`/cooking/posts/${post.id}`}>
+        <Link href={`/cooking/${post.id}`}>
+          <a href={`/cooking/${post.id}`}>
             <img src={post.imageUrl} alt={post.title} />
           </a>
         </Link>
       </div>
       <div className={styles.content}>
         <div className={styles.title}>
-          <Link href={`/cooking/posts/${post.id}`}>
-            <a href={`/cooking/posts/${post.id}`}>{post.title}</a>
+          <Link href={`/cooking/${post.id}`}>
+            <a href={`/cooking/${post.id}`}>{post.title}</a>
           </Link>
         </div>
         <div className={styles.info}>

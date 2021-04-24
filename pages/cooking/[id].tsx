@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './[id].module.scss';
-import Layout from '../../../components/layout/Layout';
+import Layout from '../../components/layout/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import Postgres from '../../../lib/clients/postgres';
-import IMessage from '../../../lib/schema/IMessage';
-import IPost from '../../../lib/schema/IPost';
-import getPostFromMessage from '../../../lib/utils/getPostFromMessage';
+import Postgres from '../../lib/clients/postgres';
+import IMessage from '../../lib/schema/IMessage';
+import IPost from '../../lib/schema/IPost';
+import getPostFromMessage from '../../lib/utils/getPostFromMessage';
 import Link from 'next/link';
-import formatDate from '../../../lib/utils/formatDate';
-import AuthorCard from '../../../components/authorCard/AuthorCard';
+import formatDate from '../../lib/utils/formatDate';
+import AuthorCard from '../../components/authorCard/AuthorCard';
 
 interface Props {
   post: IPost;

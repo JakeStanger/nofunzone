@@ -75,6 +75,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     .query(
       `SELECT * from "Message" WHERE "channelId" = '${COOKING_CHANNEL_ID}' and length(content)>0 ORDER BY timestamp desc`
     )
+
     .then((r) => r.rows);
 
   const posts: IPost[] = await Promise.all(messages.map(getPostFromMessage));
@@ -82,6 +83,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   return {
     props: {
       posts,
+      revalidate: 60,
     },
   };
 };

@@ -6,7 +6,7 @@
  */
 function cleanString(string: string) {
   return string
-    .trim()
+    ?.trim()
     .replace(/\*{1,2}/gi, '')
     .replace(/^(.)/, (_, l) => l.toUpperCase());
 }

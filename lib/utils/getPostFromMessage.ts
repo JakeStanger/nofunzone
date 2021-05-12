@@ -14,7 +14,7 @@ async function getPostFromMessage(message: IMessage): Promise<IPost> {
   const lines = message.content.split('\n').map((line) => line.trim());
 
   let title: string;
-  while (!title) {
+  while (!title && lines.length) {
     const line = lines.shift();
     if (!/^<(.*)>$/.test(line)) {
       title = startCase(cleanString(line));

@@ -57,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const client = await Postgres.getClient();
   const messages: IMessage[] = await client
     .query(
-      `SELECT id from "Message" WHERE "channelId" = '831107719473135627' ORDER BY timestamp desc`
+      `SELECT id from "Message" WHERE "channelId" = '831107719473135627' and length(content)>0 ORDER BY timestamp desc`
     )
     .then((r) => r.rows);
 

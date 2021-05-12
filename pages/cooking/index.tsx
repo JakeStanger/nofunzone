@@ -73,7 +73,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 
   const messages: IMessage[] = await client
     .query(
-      `SELECT * from "Message" WHERE "channelId" = '${COOKING_CHANNEL_ID}' ORDER BY timestamp desc`
+      `SELECT * from "Message" WHERE "channelId" = '${COOKING_CHANNEL_ID}' and length(content)>0 ORDER BY timestamp desc`
     )
     .then((r) => r.rows);
 

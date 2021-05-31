@@ -2,11 +2,12 @@ import styles from './Home.module.scss';
 import Layout from '../components/layout/Layout';
 import Link from 'next/link';
 
-const Channel: React.FC<{ name: string }> = ({ name }) => {
+const Channel: React.FC<{ name: string, url?: string }> = ({ name, url }) => {
+  url = url ?? `/${name}`;
   return (
     <div className={styles.channel}>
-      <Link href={`/${name}`}>
-        <a href={`/${name}`}>{name}</a>
+      <Link href={url}>
+        <a href={url}>{name}</a>
       </Link>
     </div>
   );
@@ -20,6 +21,7 @@ export default function Home() {
       </div>
       <div className={styles.channels}>
         <Channel name={'cooking'} />
+        <Channel name={'big_pointy_stick'} url={'/lancer'} />
       </div>
     </Layout>
   );

@@ -13,13 +13,24 @@ interface Props {
   wordleAuthors: IAuthor[];
 }
 
-function getMessageWordleScore(message: IMessage) {
+function getMessageWordleScore(message: IMessage): number {
   let guesses = message.content.match(/([1-6X])\/6/)[1].replace('X', '7');
   return 7 - parseInt(guesses);
 }
 
-const Cell: React.FC = ({children}) => (
-  <div style={{display: 'flex', gap: 10, padding: 2, borderBottom: '1px solid #ddd'}}>
+function getAverageScore(scores: number[]) {
+  return scores.reduce((acc, v, i, a) => acc + v / a.length, 0);
+}
+
+const Cell: React.FC = ({ children }) => (
+  <div
+    style={{
+      display: 'flex',
+      gap: 10,
+      padding: 2,
+      borderBottom: '1px solid #ddd',
+    }}
+  >
     {children}
   </div>
 );
@@ -34,43 +45,59 @@ const General: NextPage<Props> = ({ wordleMessages, wordleAuthors }) => {
         <div className={styles.title}>Wordle</div>
       </div>
       <div>
-        <code>Score = 7 - guesses</code>. 0 points are awarded for lost
-        games. Higher = better.
+        <code>Score = 7 - guesses</code>. 0 points are awarded for lost games.
+        Higher = better.
       </div>
       <br />
-      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto', gap: 10 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'auto auto auto auto auto',
+          gap: 10,
+        }}
+      >
         <Cell />
-        <Cell><b>Games Played</b></Cell>
-        <Cell><b>Average Score</b></Cell>
-        <Cell><b>Highest Score</b></Cell>
-        <Cell><b>Lowest Score</b></Cell>
-        {wordleAuthors.map((author, i) => {
-          const scores = wordleMessages[author.id].map(getMessageWordleScore);
+        <Cell>
+          <b>Games Played</b>
+        </Cell>
+        <Cell>
+          <b>Average Score</b>
+        </Cell>
+        <Cell>
+          <b>Highest Score</b>
+        </Cell>
+        <Cell>
+          <b>Lowest Score</b>
+        </Cell>
+        {wordleAuthors
+          .sort(
+            (a, b) =>
+              getAverageScore(wordleMessages[b.id].map(getMessageWordleScore)) -
+              getAverageScore(wordleMessages[a.id].map(getMessageWordleScore))
+          )
+          .map((author, i) => {
+            const scores = wordleMessages[author.id].map(getMessageWordleScore);
 
-          return (
-            <React.Fragment key={i}>
-              <Cell>
-                <img
-                  src={author.avatarUrl}
-                  style={{
-                    borderRadius: '50%',
-                    width: 32,
-                    height: 32,
-                  }}
-                />
-                <div>{author.nickname}</div>
-              </Cell>
-              <Cell>{scores.length}</Cell>
-              <Cell>
-                {scores
-                  .reduce((acc, v, i, a) => acc + v / a.length, 0)
-                  .toPrecision(3)}
-              </Cell>
-              <Cell>{Math.max(...scores)}</Cell>
-              <Cell>{Math.min(...scores)}</Cell>
-            </React.Fragment>
-          );
-        })}
+            return (
+              <React.Fragment key={i}>
+                <Cell>
+                  <img
+                    src={author.avatarUrl}
+                    style={{
+                      borderRadius: '50%',
+                      width: 32,
+                      height: 32,
+                    }}
+                  />
+                  <div>{author.nickname}</div>
+                </Cell>
+                <Cell>{scores.length}</Cell>
+                <Cell>{getAverageScore(scores).toPrecision(3)}</Cell>
+                <Cell>{Math.max(...scores)}</Cell>
+                <Cell>{Math.min(...scores)}</Cell>
+              </React.Fragment>
+            );
+          })}
       </div>
     </Layout>
   );

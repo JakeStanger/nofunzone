@@ -8,8 +8,8 @@ import remark from 'remark';
 import html from 'remark-html';
 
 async function getPostFromMessage(message: IMessage): Promise<IPost> {
-  const image = await getPostImage(message);
   const author = await getPostAuthor(message);
+  const image = await getPostImage(message, author);
 
   const lines = message.content.split('\n').map((line) => line.trim());
 
@@ -48,7 +48,7 @@ async function getPostFromMessage(message: IMessage): Promise<IPost> {
     title,
     author,
     imageUrl: image,
-    timestamp: message.timestamp.toISOString(),
+    timestamp: message.timestamp,
     body,
     tableData,
   };

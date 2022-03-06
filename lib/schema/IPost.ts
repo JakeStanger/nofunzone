@@ -1,6 +1,3 @@
-import { DateTime } from 'luxon';
-import { User } from 'discord.js';
-
 export interface IAuthor {
   nickname: string;
   avatarUrl: string;

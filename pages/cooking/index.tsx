@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { GetStaticProps } from 'next';
-import Postgres from '../../lib/clients/postgres';
 import IMessage from '../../lib/schema/IMessage';
 import IPost from '../../lib/schema/IPost';
 import getPostFromMessage from '../../lib/utils/getPostFromMessage';
 import Layout from '../../components/layout/Layout';
 import PostCard from '../../components/postCard/PostCard';
+import disco from '../../lib/clients/disco';
 
 interface Props {
   posts: IPost[];
@@ -67,23 +67,20 @@ const index: React.FC<Props> = ({ posts }) => {
 export default index;
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const client = await Postgres.getClient();
-
   const COOKING_CHANNEL_ID = '831107719473135627';
 
-  const messages: IMessage[] = await client
-    .query(
-      `SELECT * from "Message" WHERE "channelId" = '${COOKING_CHANNEL_ID}' and length(content)>0 ORDER BY timestamp desc`
-    )
-
-    .then((r) => r.rows);
+  const messages = await disco.guilds
+    .getById(process.env.GUILD_ID)
+    .channels.getById(COOKING_CHANNEL_ID)
+    .messages.get()
+    .then((msg) => msg.data.filter((m) => m.content.length > 0));
 
   const posts: IPost[] = await Promise.all(messages.map(getPostFromMessage));
 
   return {
     props: {
       posts,
-      revalidate: 60,
+      revalidate: 10,
     },
   };
 };

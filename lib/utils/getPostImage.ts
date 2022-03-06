@@ -1,12 +1,13 @@
 import IMessage from '../schema/IMessage';
 import ogs from 'open-graph-scraper';
-import Discord from '../clients/discord';
+import { IAuthor } from '../schema/IPost';
 
 /**
  * Gets the cover image for a post.
  * @param message
+ * @param author
  */
-async function getPostImage(message: IMessage) {
+async function getPostImage(message: IMessage, author: IAuthor) {
   // get from attached image
   if(message.attachments.length) {
     return message.attachments[0];
@@ -22,8 +23,7 @@ async function getPostImage(message: IMessage) {
   }
 
   // fallback to avatar
-  const client = await Discord.getClient();
-  return await client.users.fetch(message.authorId).then(user => user.displayAvatarURL());
+  return author.avatarUrl
 }
 
 export default getPostImage;

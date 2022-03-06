@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './[id].module.scss';
 import Layout from '../../components/layout/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import Postgres from '../../lib/clients/postgres';
 import IMessage from '../../lib/schema/IMessage';
 import IPost from '../../lib/schema/IPost';
 import getPostFromMessage from '../../lib/utils/getPostFromMessage';
 import Link from 'next/link';
 import formatDate from '../../lib/utils/formatDate';
 import AuthorCard from '../../components/authorCard/AuthorCard';
+import disco from '../../lib/clients/disco';
 
 interface Props {
   post: IPost;
@@ -54,12 +54,13 @@ const Post: React.FC<Props> = ({ post }) => {
 export default Post;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = await Postgres.getClient();
-  const messages: IMessage[] = await client
-    .query(
-      `SELECT id from "Message" WHERE "channelId" = '831107719473135627' and length(content)>0 ORDER BY timestamp desc`
-    )
-    .then((r) => r.rows);
+  const COOKING_CHANNEL_ID = '831107719473135627';
+
+  const messages = await disco.guilds
+    .getById(process.env.GUILD_ID)
+    .channels.getById(COOKING_CHANNEL_ID)
+    .messages.get()
+    .then((msg) => msg.data.filter((m) => m.content.length > 0));
 
   const paths = messages.map((m) => ({ params: { id: m.id } }));
 
@@ -70,15 +71,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const client = await Postgres.getClient();
-  const message: IMessage = await client
-    .query(`SELECT * from "Message" WHERE "id" = '${params.id}'`)
-    .then((r) => r.rows[0]);
+  const COOKING_CHANNEL_ID = '831107719473135627';
 
-  const post = await getPostFromMessage(message);
+  const message = await disco.guilds
+    .getById(process.env.GUILD_ID)
+    .channels.getById(COOKING_CHANNEL_ID)
+    .messages.getById(params.id as string)
+    .get();
+
+  const post = await getPostFromMessage(message.data);
 
   return {
     props: { post },
-    revalidate: 60,
+    revalidate: 10,
   };
 };

@@ -34,7 +34,7 @@ const General: NextPage<Props> = ({ wordleMessages, wordleAuthors }) => {
         <div className={styles.title}>Wordle</div>
       </div>
       <div>
-        <code>Average score = 7 - guesses</code>. 0 points are awarded for lost
+        <code>Score = 7 - guesses</code>. 0 points are awarded for lost
         games. Higher = better.
       </div>
       <br />

@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   return {
     props: {
       posts,
-      revalidate: 10,
     },
+    revalidate: 10,
   };
 };

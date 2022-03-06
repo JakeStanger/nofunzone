@@ -127,8 +127,8 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       wordleMessages: messages,
       wordleAuthors: authors,
-      revalidate: 10,
     },
+    revalidate: 10,
   };
 };
 

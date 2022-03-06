@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const COOKING_CHANNEL_ID = '831107719473135627';
 
   const messages = await disco.guilds
-    .getById(process.env.GUILD_ID)
+    .getById(process.env.NEXT_PUBLIC_GUILD_ID)
     .channels.getById(COOKING_CHANNEL_ID)
     .messages.get()
     .then((msg) => msg.data.filter((m) => m.content.length > 0));

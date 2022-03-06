@@ -1,4 +1,5 @@
 export interface IAuthor {
+  id: string;
   nickname: string;
   avatarUrl: string;
 }

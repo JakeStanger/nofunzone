@@ -28,6 +28,7 @@ abstract class Request<T> {
       this.baseUrl,
       process.env.NEXT_PUBLIC_API_URL
     )}?${this.params.toString()}`;
+
     return fetch(url, {
       headers: {
         accept: 'application/json',
@@ -81,12 +82,17 @@ class Channel extends Request<IChannel> {
 
 class Messages extends CollectionRequest<IMessage, Message> {
   public top(n: number) {
-    this.params.set('top', n.toString());
+    this.params.set('$top', n.toString());
     return this;
   }
 
   public skip(n: number) {
-    this.params.set('skip', n.toString());
+    this.params.set('$skip', n.toString());
+    return this;
+  }
+
+  public filter(f: string) {
+    this.params.set('$filter', f);
     return this;
   }
 }

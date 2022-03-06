@@ -20,6 +20,7 @@ export default function Home() {
         <div className={styles.title}>No Fun Zone</div>
       </div>
       <div className={styles.channels}>
+        <Channel name={'general'} />
         <Channel name={'cooking'} />
         <Channel name={'big_pointy_stick'} url={'/lancer'} />
       </div>

@@ -3,12 +3,12 @@ import IPost, { ITableData } from '../schema/IPost';
 import getPostImage from './getPostImage';
 import cleanString from './cleanString';
 import { startCase } from 'lodash';
-import getPostAuthor from './getPostAuthor';
+import getMessageByAuthorId from './getMessageByAuthorId';
 import remark from 'remark';
 import html from 'remark-html';
 
 async function getPostFromMessage(message: IMessage): Promise<IPost> {
-  const author = await getPostAuthor(message);
+  const author = await getMessageByAuthorId(message.id);
   const image = await getPostImage(message, author);
 
   const lines = message.content.split('\n').map((line) => line.trim());

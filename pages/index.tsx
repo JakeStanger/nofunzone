@@ -22,7 +22,7 @@ export default function Home() {
       <div className={styles.channels}>
         <Channel name={'general'} />
         <Channel name={'cooking'} />
-        <Channel name={'big_pointy_stick'} url={'https://foundry.nfz.toadmytoad.com'} />
+        <Channel name={'big_pointy_stick'} url={'https://foundry.toadmytoad.com'} />
       </div>
     </Layout>
   );

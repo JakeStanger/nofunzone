@@ -52,22 +52,25 @@ const General: NextPage<Props> = ({ wordleMessages, wordleAuthors }) => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'auto auto auto auto auto',
+          gridTemplateColumns: 'repeat(6, auto)',
           gap: 10,
         }}
       >
         <Cell />
         <Cell>
-          <b>Games Played</b>
+          <b>Played</b>
         </Cell>
         <Cell>
-          <b>Average Score</b>
+          <b>Average (All)</b>
         </Cell>
         <Cell>
-          <b>Highest Score</b>
+          <b>Average (Last 10)</b>
         </Cell>
         <Cell>
-          <b>Lowest Score</b>
+          <b>Highest</b>
+        </Cell>
+        <Cell>
+          <b>Lowest</b>
         </Cell>
         {wordleAuthors
           .sort(
@@ -93,6 +96,7 @@ const General: NextPage<Props> = ({ wordleMessages, wordleAuthors }) => {
                 </Cell>
                 <Cell>{scores.length}</Cell>
                 <Cell>{getAverageScore(scores).toPrecision(3)}</Cell>
+                <Cell>{getAverageScore(scores.slice(0, 10)).toPrecision(3)}</Cell>
                 <Cell>{Math.max(...scores)}</Cell>
                 <Cell>{Math.min(...scores)}</Cell>
               </React.Fragment>
